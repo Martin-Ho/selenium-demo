@@ -1,8 +1,13 @@
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -46,6 +51,8 @@ public class loginTest  {
                 return backgroundColor.equals("rgba(236, 112, 99, 1)");
             }
         });
+		
+		getscreenshot("empty-email");
 	}
 	
 	@Test
@@ -62,6 +69,8 @@ public class loginTest  {
                 return backgroundColor.equals("rgba(236, 112, 99, 1)");
             }
         });
+		
+		getscreenshot("empty-password");
 	}
 	
 	@Test
@@ -79,6 +88,8 @@ public class loginTest  {
                 return backgroundColor.equals("rgba(236, 112, 99, 1)");
             }
         });
+		
+		getscreenshot("incorrect-password");
 	}
 	
 	@Test
@@ -93,10 +104,21 @@ public class loginTest  {
 	                return url.equals("http://localhost:3000/questions");
 	            }
 	        });
+		
+		getscreenshot("correct-password");
 	}
 	
 	@AfterClass
 	public static void closeBrowser() {
 		chromeDriver.quit();
 	}
+	
+	public void getscreenshot(String filename) {
+		try {
+			File scrFile = ((TakesScreenshot)chromeDriver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile, new File("/Users/cpenarrieta/github/selenium-demo/" + filename + ".png"));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    }
 }

@@ -5,12 +5,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.io.File;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.TakesScreenshot;
 
 public class notFoundTest {
 	private static WebDriver chromeDriver;
@@ -38,11 +42,21 @@ public class notFoundTest {
             public Boolean apply(WebDriver d) {
             	WebElement errorBox = d.findElement(By.className("invalid-url-content"));
             	String backgroundColor = errorBox.getCssValue("background-color");
-            	System.out.println(backgroundColor);
                 return backgroundColor.equals("rgba(231, 76, 60, 1)");
             }
         });
+		
+		getscreenshot("not-found");
 	}
+
+	public void getscreenshot(String filename) {
+		try {
+			File scrFile = ((TakesScreenshot)chromeDriver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile, new File("/Users/cpenarrieta/github/selenium-demo/" + filename + ".png"));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    }
 	
 	@AfterClass
 	public static void closeBrowser() {
