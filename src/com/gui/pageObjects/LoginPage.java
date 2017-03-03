@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.utils.Consts;
+
 public class LoginPage {
     private final WebDriver driver;
 	WebElement emailLocator;
@@ -16,7 +18,7 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         this.driver = driver;
 
-        if (!"http://localhost:3000/".equals(driver.getCurrentUrl())) {
+        if (!Consts.APP_URL.equals(driver.getCurrentUrl())) {
             throw new IllegalStateException("This is not the login page");
         } else {
         	emailLocator = driver.findElement(By.id("emailTextField"));

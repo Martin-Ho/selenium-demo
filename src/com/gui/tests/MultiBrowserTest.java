@@ -13,6 +13,7 @@ import org.openqa.selenium.safari.SafariDriver;
 
 import com.gui.pageObjects.LoginPage;
 import com.gui.pageObjects.QuestionsPage;
+import com.utils.Consts;
 
 public class MultiBrowserTest {
 	private static WebDriver chromeDriver;
@@ -22,15 +23,15 @@ public class MultiBrowserTest {
 	
 	@BeforeClass
 	public static void setupDriver() {
-		System.setProperty("webdriver.chrome.driver","/Users/cpenarrieta/selenium/chromedriver");
-		System.setProperty("webdriver.gecko.driver","/Users/cpenarrieta/selenium/geckodriver");
+		System.setProperty("webdriver.chrome.driver", Consts.CHROME_DRIVER_PATH);
+		System.setProperty("webdriver.gecko.driver", Consts.FIREFOX_DRIVER_PATH);
 		chromeDriver = new ChromeDriver();
 		firefoxDriver = new FirefoxDriver();
 		safariDriver = new SafariDriver();
 	}
 	
 	public void before(WebDriver driver) {
-		driver.navigate().to("http://localhost:3000/");
+		driver.navigate().to(Consts.APP_URL);
 		loginPage = new LoginPage(driver);
 	}
 	
@@ -55,7 +56,7 @@ public class MultiBrowserTest {
 		loginPage.typePassword("123456");
 
 		QuestionsPage questionPage = loginPage.submitLogin();
-		assertEquals("http://localhost:3000/questions", questionPage.getUrl());
+		assertEquals(Consts.APP_URL + "questions", questionPage.getUrl());
 	}
 	
 	@Test

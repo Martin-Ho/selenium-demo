@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import com.gui.pageObjects.LoginPage;
 import com.gui.pageObjects.QuestionsPage;
+import com.utils.Consts;
 
 public class SelectQuestionTest {
 	private static WebDriver chromeDriver;
@@ -20,13 +21,13 @@ public class SelectQuestionTest {
 	
 	@BeforeClass
 	public static void setupDriver() {
-		System.setProperty("webdriver.chrome.driver","/Users/cpenarrieta/selenium/chromedriver");
+		System.setProperty("webdriver.chrome.driver", Consts.CHROME_DRIVER_PATH);
 		chromeDriver = new ChromeDriver();
 	}
 	
 	@Before
-	public void openBrowser() {
-		chromeDriver.navigate().to("http://localhost:3000/");
+	public void setup() {
+		chromeDriver.navigate().to(Consts.APP_URL);
 		loginPage = new LoginPage(chromeDriver);
 		questionsPage = loginPage.login();
 		questionsPage.submitMultipleQuestion();
